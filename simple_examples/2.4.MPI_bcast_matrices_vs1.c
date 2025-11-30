@@ -1,6 +1,7 @@
 #include <mpi.h>
 #include <stdio.h>
 #include <unistd.h>
+
 #include "arrays.h"
 
 int main(int argc, char* argv[])

@@ -1,4 +1,3 @@
-
 #ifdef _MPI
 #include <mpi.h>
 #endif 

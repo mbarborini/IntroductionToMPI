@@ -1,7 +1,7 @@
+#include "arrays.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "arrays.h"
 
 // Allocate empty matrix
 double** allocate_2d_double(int rows, int columns)
