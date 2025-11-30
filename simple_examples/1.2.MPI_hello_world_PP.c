@@ -1,7 +1,7 @@
+#include <stdio.h>
 #ifdef _MPI
 #include <mpi.h>
 #endif 
-#include <stdio.h>
 
 int main(int argc, char* argv[]) {
    int num_of_ranks;

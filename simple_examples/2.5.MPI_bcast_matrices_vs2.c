@@ -1,6 +1,5 @@
-#include <mpi.h>
 #include <stdio.h>
-#include <unistd.h>
+#include <mpi.h>
 
 #include "arrays.h"
 
