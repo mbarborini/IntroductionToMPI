@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
       vector = allocate_1d_double(number_of_elements);
       intialize_1d_double(vector,&number_of_elements);
 
-      for (int i = 0; i < num_of_ranks; i++)
+      for (int i = 1; i < num_of_ranks; i++)
       {
          MPI_Send(&number_of_elements, 1, MPI_INT, i, i, MPI_COMM_WORLD);
          MPI_Send(&vector[0], number_of_elements, MPI_DOUBLE, i, i+num_of_ranks, MPI_COMM_WORLD);
