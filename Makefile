@@ -46,7 +46,7 @@ help: # Shows interactive help.
         | sort
 
 $(BUILD_DIR):
-	mkdir --parents "$(BUILD_DIR)"
+	mkdir --parents "$(strip $(BUILD_DIR))"
 
 $(BIN_DIR): | $(BUILD_DIR)
 	mkdir "$(BIN_DIR)"
