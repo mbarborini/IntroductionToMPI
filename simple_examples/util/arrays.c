@@ -87,7 +87,7 @@ void print_1d_double(double* vector, int elements, int mpi_rank)
 void intialize_1d_double(double* vector, int elements)
 {
     for (int i = 0; i < elements; i++) {
-        vector[i] = (double)i;
+        vector[i] = (double) i;
     }
 }
 
@@ -96,7 +96,7 @@ void intialize_2d_double(double** matrix, int rows, int columns)
 {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
-            matrix[i][j] = (double)(i * columns + j + 1);
+            matrix[i][j] = (double) (i * columns + j + 1);
         }
     }
 }
