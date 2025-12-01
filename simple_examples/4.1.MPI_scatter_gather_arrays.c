@@ -8,8 +8,8 @@ int main(int argc, char* argv[])
     int num_of_ranks;
     int mpi_rank;
 
-    double* vector;
-    double* partial_vector;
+    double* vector = NULL;
+    double* partial_vector = NULL;
     int number_of_elements;
     int number_of_local_elements;
 

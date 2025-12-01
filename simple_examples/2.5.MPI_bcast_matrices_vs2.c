@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     int num_of_ranks;
     int mpi_rank;
 
-    double** matrix;
+    double** matrix = NULL;
     int number_of_rows, number_of_columns;
 
     // Initialize the MPI environment
