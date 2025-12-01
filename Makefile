@@ -70,7 +70,7 @@ $(OBJ_LIB_DIR) : | $(OBJ_DIR)
 	mkdir "$(OBJ_LIB_DIR)"
 
 $(OBJ_LIB_DIR)/%.o: $(SRC_DIR)/$(LIB_SRC)/%.c $(LIB_HEADERS) | $(OBJ_LIB_DIR)
-	$(CC) -c $(CFLAGS) -I$(SRC_DIR)/$(LIB_SRC) $@
+	$(CC) -c $(CFLAGS) -I$(SRC_DIR)/$(LIB_SRC) $< -o $@
 
 .PHONY: all
 all: $(TARGETS_BARE) $(TARGETS_WITH_UTILS)
@@ -82,7 +82,7 @@ $(BIN_BARE_DIR)/%: $(OBJ_BARE_DIR)/%.o | $(BIN_BARE_DIR)
 	$(CC) $(LDFLAGS) $^ -o $@
 
 $(OBJ_BARE_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_BARE_DIR)
-	$(CC) -c $(CFLAGS) $< $@
+	$(CC) -c $(CFLAGS) $< -o $@
 
 .PHONY: TARGETS_WITH_UTILS
 $(TARGETS_WITH_UTILS): %: $(BIN_WITH_UTILS_DIR)/%
@@ -91,7 +91,7 @@ $(BIN_WITH_UTILS_DIR)/%: $(OBJ_WITH_UTILS_DIR)/%.o $(LIB_OBJS) | $(BIN_WITH_UTIL
 	$(CC) $(LDFLAGS) $^ -o $@
 
 $(OBJ_WITH_UTILS_DIR)/%.o: $(SRC_DIR)/%.c $(LIB_HEADERS) | $(OBJ_WITH_UTILS_DIR)
-	$(CC) -c $(CFLAGS) -I$(SRC_DIR)/$(LIB_SRC) $< $@
+	$(CC) -c $(CFLAGS) -I$(SRC_DIR)/$(LIB_SRC) $< -o $@
 
 .PHONY: clean
 clean:
