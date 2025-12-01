@@ -1,6 +1,6 @@
 $(info Introduction to MPI)
 
-CC ?= mpicc
+CC = mpicc
 CFLAGS ?= -O2 -Wall
 LDFLAGS ?= $(CFLAGS)
 
