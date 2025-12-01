@@ -89,3 +89,11 @@ $(BIN_WITH_UTILS_DIR)/%: $(OBJ_WITH_UTILS_DIR)/%.o $(LIB_OBJS) | $(BIN_WITH_UTIL
 
 $(OBJ_WITH_UTILS_DIR)/%.o: $(SRC_DIR)/%.c $(LIB_HEADERS) | $(OBJ_WITH_UTILS_DIR)
 	$(CC) -c $(CFLAGS) -I$(SRC_DIR)/$(LIB_SRC) $< $@
+
+.PHONY: clean
+clean:
+	@echo "Removing files:"
+	@if [ -d $(BUILD_DIR) ]; then \
+	    find $(BUILD_DIR) -type f -print0 | xargs -0I % bash -c '{ echo "%"; rm "%"; }'; \
+	    rm -r $(BUILD_DIR); \
+	fi
