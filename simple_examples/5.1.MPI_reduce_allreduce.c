@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
     if (mpi_rank == 0) {
         vector_sum = allocate_1d_double(number_of_elements);
     }
-    MPI_Reduce(&vector[0], &vector_sum[0], number_of_elements, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
+    MPI_Reduce(vector, vector_sum, number_of_elements, MPI_DOUBLE, MPI_SUM, 0, MPI_COMM_WORLD);
 
     // Print the sum vector allocated only by rank 0.
     if (mpi_rank == 0) {
@@ -65,7 +65,7 @@ int main(int argc, char* argv[])
     if (mpi_rank != 0) {
         vector_sum = allocate_1d_double(number_of_elements);
     }
-    MPI_Allreduce(&vector[0], &vector_sum[0], number_of_elements, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+    MPI_Allreduce(vector, vector_sum, number_of_elements, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
 
     // Print all sum vectors after Allreduce
     if (mpi_rank == 0) {
