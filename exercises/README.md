@@ -78,7 +78,7 @@ BLAS incorporates a scaling operations in the multiplication as they appear comm
 process xGEMV(m, n, alpha, A, ldA, x, incx, beta, y, incy)
   for j = 0:(m-1)
     for i = 0:(n-1)
-      y[i*incy] <- y[i*incy] + alpha*A[i+j*ldA]*x[i*incx]
+      y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx] + beta*y[i*incy]
     end
   end
 end
