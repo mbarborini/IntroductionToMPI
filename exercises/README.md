@@ -132,7 +132,7 @@ process xGEMM(m, n, k, alpha, A, ldA, B, ldB, beta, C, ldC)
   for j = 0:(n-1)
     for l = 0:(k-1)
       for i = 0:(m-1)
-        C[i+j*ldC] <- C[i+j*ldC] + A[i+l*ldA]*B[l+j*ldB]
+        C[i+j*ldC] <- A[i+l*ldA]*B[l+j*ldB] + beta*C[i+j*ldC]
       end
     end
   end
