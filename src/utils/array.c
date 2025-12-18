@@ -1,10 +1,10 @@
-#include "arrays.h"
+#include "array.h"
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 // Allocate empty matrix
-double** allocate_2d_double(int rows, int columns)
+double** allocate_2d_double(int const rows, int const columns)
 {
     if (rows <= 0 || columns <= 0) {
         return NULL;
@@ -21,7 +21,7 @@ double** allocate_2d_double(int rows, int columns)
 }
 
 // Allocate empty matrix (consecutive elements)
-double* allocate_2d_double_blocked(int rows, int columns)
+double* allocate_2d_double_blocked(int const rows, int const columns)
 {
     if (rows <= 0 || columns <= 0) {
         return NULL;
@@ -34,7 +34,7 @@ double* allocate_2d_double_blocked(int rows, int columns)
 }
 
 // Allocate empty vector
-double* allocate_1d_double(int elements)
+double* allocate_1d_double(int const elements)
 {
     if (elements <= 0) {
         return NULL;
@@ -42,16 +42,17 @@ double* allocate_1d_double(int elements)
 
     // 1. Allocate memory for the row pointers (an array of double*)
     double* vector = (double*) calloc(elements, sizeof(double));
+
     return vector;
 }
 
-double* free_1d_double(double* vector)
+double* free_1d_double(double* const vector)
 {
     free(vector);
     return NULL;
 }
 
-double** free_2d_double(double** matrix, int rows)
+double** free_2d_double(double** const matrix, int const rows)
 {
     for (int i = 0; i < rows; i++) {
         free(matrix[i]);
@@ -61,14 +62,14 @@ double** free_2d_double(double** matrix, int rows)
 	return NULL;
 }
 
-double* free_2d_double_blocked(double* matrix)
+double* free_2d_double_blocked(double* const matrix)
 {
     free(matrix);
 	return NULL;
 }
 
 // Print matrix
-void print_2d_double(double** mat, int rows, int columns, int mpi_rank)
+void print_2d_double(double** const mat, int const rows, int const columns, int const mpi_rank)
 {
     printf("Matrix from rank %d : ", mpi_rank);
     for (int i = 0; i < rows; i++) {
@@ -79,7 +80,7 @@ void print_2d_double(double** mat, int rows, int columns, int mpi_rank)
     printf("\n");
 }
 
-void print_2d_double_blocked(double* mat, int rows, int columns, int mpi_rank)
+void print_2d_double_blocked(double const* const mat, int const rows, int const columns, int const mpi_rank)
 {
     printf("Matrix from rank %d : ", mpi_rank);
     for (int i = 0; i < rows; i++) {
@@ -91,7 +92,7 @@ void print_2d_double_blocked(double* mat, int rows, int columns, int mpi_rank)
 }
 
 // Print vector
-void print_1d_double(double* vector, int elements, int mpi_rank)
+void print_1d_double(double const* const vector, int const elements, int const mpi_rank)
 {
     printf("Vector from rank %d : ", mpi_rank);
     for (int i = 0; i < elements; i++) {
@@ -101,7 +102,7 @@ void print_1d_double(double* vector, int elements, int mpi_rank)
 }
 
 // Initialize vector elements
-void intialize_1d_double(double* vector, int elements)
+void intialize_1d_double(double* const vector, int const elements)
 {
     for (int i = 0; i < elements; i++) {
         vector[i] = (double) i;
@@ -109,7 +110,7 @@ void intialize_1d_double(double* vector, int elements)
 }
 
 // Initialize Matrix elements
-void intialize_2d_double(double** matrix, int rows, int columns)
+void intialize_2d_double(double** const matrix, int const rows, int const columns)
 {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
@@ -118,11 +119,37 @@ void intialize_2d_double(double** matrix, int rows, int columns)
     }
 }
 
-void intialize_2d_double_blocked(double* matrix, int rows, int columns)
+void intialize_2d_double_blocked(double* const matrix, int const rows, int const columns)
 {
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < columns; j++) {
             matrix[i*columns + j] = (double) (i * columns + j);
+        }
+    }
+}
+
+void set_initilize_rand_seed(unsigned int const seed)
+{
+    srand(seed);
+}
+
+double get_double_rand()
+{
+    return rand() % 100;
+}
+
+void initialize_1d_double_rand(double* const vector, int const elements)
+{
+    for (int i = 0; i < elements; i++) {
+        vector[i] = rand() % 100;
+    }
+}
+
+void initialize_2d_double_blocked_rand(double* const matrix, int const rows, int const columns)
+{
+    for (int i = 0; i < columns; i++) {
+        for (int j = 0; j < rows; j++) {
+            matrix[j+i*rows] = rand() % 100;
         }
     }
 }
