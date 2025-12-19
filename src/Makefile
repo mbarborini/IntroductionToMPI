@@ -6,6 +6,7 @@ ROOT_DIR := $(realpath $(shell pwd))
 
 MPI ?= off # Enable MPI on executables that use MPI conditionally
 BUILD_DIR ?= $(strip $(ROOT_DIR)/build) # Define the outpur directory
+BLAS_LIB ?= flexiblas # Define the name of the BLAS library that will be used (configuration retrieved with pkgconf)
 
 include make/build_setup.mk
 
@@ -43,13 +44,15 @@ HELP_OUTPUT_CMD := $(shell \
     echo "cat"; \
   fi\
 )
+MAKEFILES := Makefile $(wildcard make/*) $(wildcard */build.mk)
 
 .PHONY: help
-help: # Shows interactive help.
+help: # Show help information
 	@bash -c '([ -f INSTALL.md ] && cat INSTALL.md || true)'
 	@echo
 	@echo "make variables:"
-	@sed -e 's/^\([^\ \t]\+\)[\ \t]*?=[^#]\+#\+\(.*\)$$/\1 \2/p;d' Makefile \
+	@cat $(MAKEFILES) \
+	    | sed -e 's/^\([^\ \t]\+\)[\ \t]*?=[^#]\+#\+\(.*\)$$/\1 \2/p;d' \
         | $(HELP_OUTPUT_CMD) \
         | sort
 	@echo
@@ -57,13 +60,17 @@ help: # Shows interactive help.
 	@echo $(TARGETS) | tr ' ' '\n' | xargs -I % bash -c 'echo "-  %"'
 	@echo
 	@echo "make special targets:"
-	@sed -e 's/^\([^:\ \t]\+\):.*#\+\(.*\)$$/\1 \2/p;d' Makefile \
+	@cat $(MAKEFILES) \
+        | sed -e 's/^\([^:\ \t]\+\):.*#\+\(.*\)$$/\1 \2/p;d' \
         | $(HELP_OUTPUT_CMD) \
         | sort
 
 include utils/build.mk
 include simple_examples/build.mk
 include exercises/build.mk
+
+.PHONY: all
+all: exercises simple_examples libraries
 
 .PHONY: clean
 clean: # Clear contents of build directory

@@ -73,34 +73,6 @@ static bool test_muptiply(int const m, int const k, int const n, GEMM gemm, doub
 GEMM const tested_gemm = &multiply_matrices;
 // GEMM const tested_gemm = &parallel_gemm;
 
-static bool generate_matrix_dimension(int* const m, int* const k, int* const n)
-{
-    int const max_dim = n_dimensions;
-    static int m_dim = 0;
-    static int k_dim = 0;
-    static int n_dim = 0;
-
-    if (n_dim >= max_dim) {
-        return false;
-    }
-
-    *m = dimensions[m_dim];
-    *k = dimensions[k_dim];
-    *n = dimensions[n_dim];
-
-    m_dim++;
-    if (m_dim >= max_dim) {
-        m_dim = 0;
-        k_dim++;
-    }
-    if (k_dim >= max_dim) {
-        k_dim = 0;
-        n_dim++;
-    }
-
-    return true;
-}
-
 static bool generate_square_matrix_dimension(int* const m, int* const k, int* const n)
 {
     int const max_dim = n_dimensions;
@@ -130,10 +102,7 @@ int main(int argc, char* argv[])
     while (generate_square_matrix_dimension(&m, &k, &n)) {
         bool const test_pass = test_muptiply(m, k, n, tested_gemm, epsilon, seed);
         if (!test_pass) {
-            printf(
-                "Multiplication failed for: m=%d, k=%d, n=%d\n",
-                dimensions[m], dimensions[k], dimensions[n]
-            );
+            printf("Multiplication failed for: m=%d, k=%d, n=%d\n", m, k, n);
             all_test_pass = false;
         }
     }

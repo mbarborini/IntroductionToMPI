@@ -62,7 +62,7 @@ end
 
 This `xDOT` function like `xAXPY` reads 2 vectors, $x$ and $y$, sequentially. One way that data access in `xAXPY` differs from `xDOT` is that in `xAXPY` one of the input vectors is also written sequentially.
 
-**Excercise 1.1:** Implement the `xAXPY` `xDOT` operation in C programs (10 points).
+**Excercise 1.1:** Implement the `DAXPY` and `DDOT` operations in C programs (10 points).
 
 ### Matrix-vector multiplication
 
@@ -101,7 +101,7 @@ The pattern of memory access now matters. Due to caching, it is faster to access
 ```
 for j = 0:(m-1)
   for i = 0:(n-1)
-    y[i*incy] <- y[i*incy] + alpha*A[i+j*ldA]*x[i*incx]
+    y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx] + beta*y[i*incy]
   end
 end
 ```
@@ -109,13 +109,13 @@ is faster than the $i \to j$ for loop
 ```
 for i = 0:(n-1)
   for j = 0:(m-1)
-    y[i*incy] <- y[i*incy] + alpha*A[i+j*ldA]*x[i*incx]
+    y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx] + beta*y[i*incy]
   end
 end
 ```
 even though the perform the exact same number and type of operations and produce the same result. Note that the memory access pattern of the $i \to j$ inner loop is the same as the `xDOT` pattern, as the inner loop performs a dot product between the rows of $A$ and $y$.
 
-**Excercise 1.2:** Implement `xGEMV` and the same operation with data access pattern of `xDOT` (call it `rowwise_xGEMV`) in C programs. Run a few examples with both functions, and provide the run times (10 points).
+**Excercise 1.2:** Implement `DGEMV` and the same operation with data access pattern of `DDOT` (call it `rowwise_DGEMV`) in C programs. Run a few examples with both functions, and provide the run times (10 points).
 
 ### Matrix-matrix multiplication
 
@@ -141,7 +141,7 @@ end
 
 As with the matrix-vector mutliplication we can see that the operation performed in the inner loop has the same data access patern to `xAXPY` to ensure that the most frequent access to the memory is sequential.
 
-**Excercise 1.3:** Implement the `xGEMM` of BLAS and the `xGEMM` that accesses $A$ in a row major manner ($j \to i \to l$) calling it `rowwise_xGEMM` in C programms. Run a few examples and provide the runtimes  (10 points).
+**Excercise 1.3:** Implement the `DGEMM` of BLAS and the `DGEMM` that accesses $A$ in a row major manner ($j \to i \to l$) calling it `rowwise_DGEMM` in C programms. Run a few examples and provide the runtimes  (10 points).
 
 ## Matrix-matrix multiplication parallelization in the message passing framework
 
@@ -198,7 +198,19 @@ process row_wise_cannon(A, B, C)
 end
 ```
 
-**Excercise 2.2:** Implement a parallelized version of the matrix-matrix multiplication in C using dynamic scattetring of a single operand  (15 points).
+**Excercise 2.2:** Implement a parallelized version of the matrix-matrix multiplication in C using dynamic scattering of a single operand  (15 points).
+
+## Submission
+
+To submit the exercise, you need to create an archive of the source part (`src`) of the repository and upload it to the uni Moodle. Assume that you work on the `main` branch and all your code is committed. Then, create the `TAR.GZ` archive with the following command:
+
+```
+git archive --format=tar.gz --output=${HOME}/MPI_exercise-<name>-<surname>.tar.gz --prefix=excercise/ main src/
+```
+
+Then, upload the file `MPI_exercise-<name>-<surname>.tar.gz` in your home directory to the unit Moodle in the corresponding exercise.
+
+_Note:_ if you are working on a branch different that `main` or if you created a tag, then you can replace `main` with any valid commit or commit reference.
 
 ## _References_
 
