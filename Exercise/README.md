@@ -12,7 +12,7 @@ Then, create the `TAR.GZ` archive with the following command:
 git archive --format=tar.gz --output=${HOME}/MPI_exercise-<name>-<surname>.tar.gz --prefix=excercise/ main src/
 ```
 
-Then, upload the file `MPI_exercise-<name>-<surname>.tar.gz` in your home directory to the unit Moodle in the corresponding exercise.
+Then, send the file `MPI_exercise-<name>-<surname>.tar.gz` to the emails specified above.
 
 _Note:_ if you are working on a branch different that `main` or if you created a tag, then you can replace `main` with any valid commit or commit reference.
 
