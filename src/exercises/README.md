@@ -76,9 +76,13 @@ BLAS incorporates a scaling operations in the multiplication as they appear comm
 
 ```
 process xGEMV(m, n, alpha, A, ldA, x, incx, beta, y, incy)
+  for i = 0:(n-1)
+      y[i*incy] <- beta*y[i*incy]
+  end
+
   for j = 0:(m-1)
     for i = 0:(n-1)
-      y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx] + beta*y[i*incy]
+      y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx]
     end
   end
 end
@@ -101,7 +105,7 @@ The pattern of memory access now matters. Due to caching, it is faster to access
 ```
 for j = 0:(m-1)
   for i = 0:(n-1)
-    y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx] + beta*y[i*incy]
+    y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx]
   end
 end
 ```
@@ -109,7 +113,7 @@ is faster than the $i \to j$ for loop
 ```
 for i = 0:(n-1)
   for j = 0:(m-1)
-    y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx] + beta*y[i*incy]
+    y[i*incy] <- alpha*A[i+j*ldA]*x[i*incx]
   end
 end
 ```
@@ -130,9 +134,15 @@ Again there are scaling operations incorporated as they often appear in many app
 ```
 process xGEMM(m, n, k, alpha, A, ldA, B, ldB, beta, C, ldC)
   for j = 0:(n-1)
+    for i = 0:(m-1)
+      C[i+j*ldC] <- beta*C[i+j*ldC]
+    end
+  end
+
+  for j = 0:(n-1)
     for l = 0:(k-1)
       for i = 0:(m-1)
-        C[i+j*ldC] <- A[i+l*ldA]*B[l+j*ldB] + beta*C[i+j*ldC]
+        C[i+j*ldC] <- A[i+l*ldA]*B[l+j*ldB]
       end
     end
   end
