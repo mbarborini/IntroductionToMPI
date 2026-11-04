@@ -50,6 +50,17 @@ double *allocate_1d_double(int *n)
    return vector;
 }
 
+// Allocate empty vector
+int *allocate_1d_int(int *n)
+{
+   if (*n <= 0)
+      return NULL;
+
+   // Allocate memory for the row pointers (an array of int*)
+   int *vector = (int *)calloc(*n, sizeof(int));
+   return vector;
+}
+
 // Print matrix
 void print_2d_double(int *n, int *m, double **A)
 {
@@ -75,6 +86,19 @@ void print_1d_double(int *n, double *a)
    for (int i = 0; i < *n; i++)
    {
       printf(" %4.2f ", a[i]);
+   }
+   printf("\n");
+}
+
+// Print vector
+void print_1d_int(int *n, int *a)
+{
+   printf("Number of elements: %4i \n", *n);
+   printf("Elements :\n");
+
+   for (int i = 0; i < *n; i++)
+   {
+      printf(" %d ", a[i]);
    }
    printf("\n");
 }
