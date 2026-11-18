@@ -41,7 +41,8 @@ int main(int argc, char *argv[])
     }
 
     MPI_Datatype MPI_RAW_PARTICLE_TYPE;
-    MPI_Type_create_struct(PARTICLE_STRUCT_VARIABLES, &blocklengths[0], &displacements[0], &MPI_variables_types[0], &MPI_RAW_PARTICLE_TYPE);
+    MPI_Type_create_struct(PARTICLE_STRUCT_VARIABLES, &blocklengths[0], &displacements[0], &MPI_variables_types[0], 
+        &MPI_RAW_PARTICLE_TYPE);
 
     MPI_Datatype MPI_PARTICLE_TYPE;
     MPI_Type_create_resized(MPI_RAW_PARTICLE_TYPE, 0, sizeof(Particle), &MPI_PARTICLE_TYPE);
