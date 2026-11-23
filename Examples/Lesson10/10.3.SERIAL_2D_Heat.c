@@ -4,7 +4,7 @@
 
 #define N_GRID_POINTSX 512 // Grid interior points along x
 #define N_GRID_POINTSY 512 // Grid interior points along y
-#define N_TEMP_STEPS 100   // Number of time steps
+#define N_TEMP_STEPS 10000   // Number of time steps
 #define D 1.0              // Thermal diffusion constant
 #define L 1.0              // Length of the side of the plane
 
@@ -14,7 +14,7 @@ int main()
     double dx = L / (N_GRID_POINTSX + 1);
     double dy = L / (N_GRID_POINTSY + 1);
     // Choose dt to satisfy stability criterion for explicit Euler: r = D * dt / dx^2 <= 0.5
-    double dt = 0.4 / D * ( (dx * dx) + (dy * dy) );
+    double dt = 0.124 / D * ( (dx * dx) + (dy * dy) );
     double rx = D * dt / (dx * dx);
     double ry = D * dt / (dy * dy);
 
@@ -53,6 +53,13 @@ int main()
         u = u_new; 
         u_new = temp;
 
+    }
+
+    for (int i=0;i<num_elementsy; i++){
+        for (int j=0;j<num_elementsx; j++){
+            printf("%10.5f\n", u[i][j]);
+        }
+        printf("\n");
     }
 
     return 0;
