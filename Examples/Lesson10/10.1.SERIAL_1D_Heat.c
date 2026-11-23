@@ -35,7 +35,7 @@ int main()
     {
 
         u_new[0] = 0.0;
-        u_new[N + 1] = 0.0;
+        u_new[N_GRID_POINTS + 1] = 0.0;
         for (int i = 1; i <= N_GRID_POINTS; i++)
         {
             u_new[i] = u[i] + r * (u[i - 1] - 2.0 * u[i] + u[i + 1]);
