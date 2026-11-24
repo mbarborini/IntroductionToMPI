@@ -4,7 +4,7 @@
 
 #define N_GRID_POINTSX 512 // Grid interior points along x
 #define N_GRID_POINTSY 512 // Grid interior points along y
-#define N_TEMP_STEPS 10000   // Number of time steps
+#define N_TEMP_STEPS 100000   // Number of time steps
 #define D 1.0              // Thermal diffusion constant
 #define L 1.0              // Length of the side of the plane
 
